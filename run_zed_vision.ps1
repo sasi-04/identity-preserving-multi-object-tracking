@@ -17,8 +17,9 @@ python -m pytest backend/tests/ -q
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[WARNING] Some tests encountered issues. Review test logs." -ForegroundColor Yellow
 } else {
-    Write-Host "[OK] All 21 tracking and OIE unit tests passed." -ForegroundColor Green
+    Write-Host "[OK] All 30 tracking and OIE unit tests passed." -ForegroundColor Green
 }
+
 
 Write-Host "`n[2/3] Checking synthetic demo video..." -ForegroundColor Cyan
 python -c "from backend.app.services.session_manager import SessionManager; SessionManager()._ensure_sample_demo_video(); print('[OK] Demo transit gate sequence ready.')"

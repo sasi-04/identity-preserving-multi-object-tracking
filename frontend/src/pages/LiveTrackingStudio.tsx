@@ -264,8 +264,11 @@ export const LiveTrackingStudio: FC<LiveTrackingStudioProps> = ({
       if (sid) {
         stopSession(sid).catch(() => {});
       }
+      activeSessionIdRef.current = null;
+      setActiveSessionId(null);
     };
   }, []);
+
 
   // Set default video handler
   const handleSetDefaultVideo = () => {

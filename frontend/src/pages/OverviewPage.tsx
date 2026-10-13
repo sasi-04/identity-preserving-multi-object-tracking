@@ -156,6 +156,7 @@ export const OverviewPage: FC<OverviewPageProps> = ({
   const handleDemoReset = async () => {
     const sid = demoSessionIdRef.current;
     if (!sid) return;
+    const wasPlaying = demoPlayingRef.current;
     stopDemo();
     try {
       await resetSession(sid);
@@ -166,11 +167,14 @@ export const OverviewPage: FC<OverviewPageProps> = ({
         setDemoFrame(res.frame_idx);
         setDemoTelemetry(res.telemetry);
       }
-      startDemo(sid, demoGenRef.current);
+      if (wasPlaying) {
+        startDemo(sid, demoGenRef.current);
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
 
   // Initialize demo stream and fetch benchmark experiments on mount
   useEffect(() => {
@@ -219,9 +223,11 @@ export const OverviewPage: FC<OverviewPageProps> = ({
           }
 
           setDemoLoading(false);
-          // Auto-play the demo immediately for the interviewer!
-          startDemo(session.session_id, currentGen);
+          // Kept paused initially on Home page until user clicks Play button
+          setDemoPlaying(false);
+          demoPlayingRef.current = false;
         } catch (err) {
+
           console.error('Failed to initialize hero demo session', err);
           setDemoLoading(false);
         }
@@ -422,12 +428,37 @@ export const OverviewPage: FC<OverviewPageProps> = ({
               }}
             >
               {demoImage ? (
-                <img
-                  src={demoImage}
-                  alt="ZED Vision Live Demo"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
+                <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img
+                    src={demoImage}
+                    alt="ZED Vision Live Demo"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                  {!demoPlaying && (
+                    <button
+                      onClick={handleDemoTogglePlay}
+                      style={{
+                        position: 'absolute',
+                        width: '64px',
+                        height: '64px',
+                        borderRadius: '50%',
+                        background: 'rgba(230, 57, 70, 0.9)',
+                        border: '2px solid rgba(255, 255, 255, 0.85)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 0 24px rgba(230, 57, 70, 0.75)',
+                        transition: 'transform 0.15s ease',
+                      }}
+                      title="Click to Play Live Demo"
+                    >
+                      <Play size={28} fill="#ffffff" color="#ffffff" style={{ marginLeft: '4px' }} />
+                    </button>
+                  )}
+                </div>
               ) : demoLoading ? (
+
                 <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
                   <div style={{ margin: '0 auto 0.75rem', width: '30px', height: '30px', border: '3px solid rgba(255,255,255,0.2)', borderTopColor: 'var(--zed-red)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
                   <div style={{ fontSize: '13.5px', fontWeight: 600, color: '#fff' }}>Initializing Executive Demo Stream...</div>
