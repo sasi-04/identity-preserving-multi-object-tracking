@@ -17,8 +17,10 @@ import {
   Sparkles,
   ArrowRight,
   Lock,
-  FileText
+  FileText,
+  Presentation
 } from 'lucide-react';
+
 
 import type { PageId } from '../components/Sidebar';
 import {
@@ -356,7 +358,30 @@ export const OverviewPage: FC<OverviewPageProps> = ({
               <FileText size={15} color="#ff8080" />
               <span>User Manual (PDF)</span>
             </a>
+            <a
+              href="http://127.0.0.1:8080/presentation.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-secondary"
+              style={{
+                padding: '0.65rem 1.25rem',
+                fontSize: '13px',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                color: '#38bdf8',
+                borderColor: 'rgba(2, 132, 199, 0.45)',
+                background: 'rgba(2, 132, 199, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+              }}
+              title="Open Official 10-Minute HR Presentation Guide (PDF)"
+            >
+              <Presentation size={15} color="#38bdf8" />
+              <span>10-Min HR Guide (PDF)</span>
+            </a>
           </div>
+
 
         </div>
       </div>

@@ -64,6 +64,20 @@ async def get_user_manual_pdf():
     return JSONResponse(status_code=404, content={"error": "User manual PDF not found"})
 
 
+@app.get("/presentation.pdf", tags=["Documentation"])
+@app.get("/api/presentation", tags=["Documentation"])
+async def get_presentation_pdf():
+    pres_path = config.base_dir / "docs" / "ZED_VISION_10Min_HR_Presentation.pdf"
+    if pres_path.exists():
+        return FileResponse(
+            str(pres_path),
+            media_type="application/pdf",
+            filename="ZED_VISION_10Min_HR_Presentation.pdf"
+        )
+    return JSONResponse(status_code=404, content={"error": "Presentation PDF not found"})
+
+
+
 # Mount frontend production build if present
 frontend_dist = config.base_dir / "frontend" / "dist"
 if frontend_dist.exists():

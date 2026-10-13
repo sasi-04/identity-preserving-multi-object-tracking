@@ -9,8 +9,10 @@ import {
   Sliders,
   Cpu,
   ShieldCheck,
-  FileText
+  FileText,
+  Presentation
 } from 'lucide-react';
+
 
 
 export type PageId =
@@ -177,6 +179,32 @@ export const Sidebar: FC<SidebarProps> = ({
           <FileText size={15} />
           <span>User Manual (PDF)</span>
         </a>
+
+        <a
+          href="http://127.0.0.1:8080/presentation.pdf"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            padding: '0.55rem 0.75rem',
+            borderRadius: '6px',
+            background: 'rgba(2, 132, 199, 0.12)',
+            border: '1px solid rgba(2, 132, 199, 0.35)',
+            color: '#38bdf8',
+            textDecoration: 'none',
+            fontSize: '12px',
+            fontWeight: 600,
+            transition: 'all 0.15s ease',
+          }}
+          title="Open Official 10-Minute HR Presentation Guide (PDF)"
+        >
+          <Presentation size={15} />
+          <span>10-Min HR Guide (PDF)</span>
+        </a>
+
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <ShieldCheck size={14} color="var(--color-confirmed)" />
